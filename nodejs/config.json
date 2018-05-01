@@ -1,0 +1,6 @@
+{
+    "PORT": 8082,
+    "DB_PROTOCOL": "mongodb",
+    "DB_SERVER": "192.168.43.170",
+    "DB_NAME": "test"
+}

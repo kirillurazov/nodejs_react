@@ -1,0 +1,77 @@
+html,
+body,
+#root {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.list-group-item:hover {
+    text-decoration: none;
+    color: #555;
+    background-color: #f5f5f5;
+}
+
+.list-group-item .row {
+    margin-bottom: 10px;
+}
+
+.list-group-item .row:last-of-type {
+    margin-bottom: 0;
+}
+
+.page-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.nav-container {
+    height: 100%;
+    margin: 0;
+    padding: 10px;
+    flex-direction: column;
+    overflow: auto;
+}
+
+.plays-container,
+.scenes-container {
+    flex: 0 0 300px;
+}
+
+.acts-container,
+.actions-container {
+    flex: 0 0 125px;
+    white-space: nowrap;
+}
+
+.single-action-container {
+    width: 100%;
+}
+
+.action-title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.say-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.say-container > * {
+    margin: 0 5px;
+}
+
+.say-container p {
+    margin: 0;
+}
+
+.say-container .speech-container {
+    width: 100%;
+}
