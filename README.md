@@ -226,7 +226,6 @@ export class SingleAction extends React.Component {
 7. Напишем в нём простейший компонент, демонстрирующий основные возможности React:
 ```javascript
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 class Enthused extends React.Component {
   componentDidMount() {
