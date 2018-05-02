@@ -58,7 +58,7 @@ my-app
 В репозитории на github вы можете найти полный код приложения. Здесь мы на примере одного компонента ознакомимся с react-компонентом и с работой с сервером с помощью superagent.
 Проект предоставляет интерфейс для работы с базой данных с 36 пьесами Шекспира из лабораторной работы MongoDB.
 Для примера возьмём компонент SingleAction.
-```
+```javascript
 import * as React from 'react';
 import API from '../../API/index';
 import { Button, Glyphicon, ListGroup } from 'react-bootstrap';
