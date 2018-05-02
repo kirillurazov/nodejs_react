@@ -213,8 +213,101 @@ export class SingleAction extends React.Component {
 И, наконец, отметим ещё одну интересную деталь. Пожалуй, даже самую интересную. Это js внутри html (вернее внутри JSX). В тех местах, где мы в качестве значения props хотим передать переменную, или то, что вернёт функция, или что-то подобное, мы можем написать {} и между ними js-код, который вернёт какое-то значение. Но заметим, что это должно быть одно выражение. То есть, там нельзя написать, например, конструкцию if…else…
 ### И в заключении пара слов о superagent.
 Обратимся к нашему статическому классу API. На самом деле, работать с superagent очень просто. Мы рассмотрим работу с ним на примере post-запроса, более подробную информацию о нём можно найти в [оф. документации](http://visionmedia.github.io/superagent/). Итак, post-запрос. Для его отправки нужно вызвать соответствующий метод .post(), в качестве аргумента передать url (за формирование url в нашем случае отвечает простейшая функция formatUrl), после чего в виде цепочки вызывать любой из методов, описанных для соответствующего запроса в документации. Например, для отправки тела post-запроса вызовем метод .send() в который передадим некоторые данные. Эти данные будут отправлены на сервер в теле запроса. Для задания заголовков может быть использован метод .set() в который могут быть переданы 2 строки – название http-заголовка и его значение, либо объект, в котором каждый ключ – название http-заголовка, а значение – значение http-заголовка. Методов довольно много, они полностью охватывают всё взаимодействие «клиент-сервер» для веб-приложения, со всеми можно ознакомится в [документации](http://visionmedia.github.io/superagent/).
+Полный пример реализации ассинхронных запросов через библиотеку SuperAgent вы можете посмотреть в этом репозитории в файле `nodejs_react/front/src/API/index.js`.
+
+##Порядок выполнения
+1. [Скачать](https://nodejs.org/en/) и установить NodeJS
+2. Установить create-react-app выполнив в термниале команду `npm install -g create-react-app`
+3. Создать приложение в нужной папке выполнив команду `create-react-app my-app`, где `my-app` название вашего приложения
+4. Перейти в папку приложения `cd my-app`
+Со структурой приложения, расположенного в данной папке, а также с рекомендациями по формировании структуры в дальнейшем развитии приложения, мы уже ознакомились выше.
+5. Убедимся в работоспособности созданного приложения, выполнив команду `npm start`. Данная команда запустит приложение, после чего оно откроется в браузере. Остановить приложение можно нажав *Ctrl + c*, находясь в терминале.
+6. Откроем для редактирования файл `src/App.js`, который на данный момент является единственным компонентом приложения.
+7. Напишем в нём простейший компонент, демонстрирующий основные возможности React:
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+class Enthused extends React.Component {
+  componentDidMount() {
+    this.interval = setInterval(() => {
+      this.props.addText('!');
+    }, 15);
+  }
+  
+  componentWillUnmount(prevProps, prevState) {
+    clearInterval(this.interval);
+  }
+
+  render() {
+    return (
+      <button onClick={this.props.toggle}>
+        Stop!
+      </button>
+    );
+  }
+}
+
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      enthused: false,
+      text: ''
+    };
+  }
+
+  toggleEnthusiasm = () => {
+    this.setState({
+      enthused: !this.state.enthused
+    });
+  }
+
+  setText = (text) => {
+    this.setState({ text: text });
+  }
+
+  addText = (newText) => {
+    let text = this.state.text + newText;
+    this.setState({ text: text });
+  }
+
+  handleChange = (event) => {
+    this.setText(event.target.value);
+  }
+
+  render() {
+    let button;
+    if (this.state.enthused) {
+      button = (
+        <Enthused toggle={this.toggleEnthusiasm} addText={this.addText} />
+      );
+    } else {
+      button = (
+        <button onClick={this.toggleEnthusiasm}>
+          Add Enthusiasm!
+        </button>
+      );
+    }
+
+    return (
+      <div>
+        <h1>Auto-Enthusiasm</h1>
+        <textarea rows="7" cols="40" value={this.state.text} 
+          onChange={this.handleChange}>
+        </textarea>
+        {button}
+        <h2>{this.state.text}</h2>
+      </div>
+    );
+  }
+}
+```
+Мы добавили ещё один компонент. С точки зрения грамотности архитектуры, правильнее было бы его вынести в отдельный файл, но здесь для простоты примеры мы оставим его в этом же файле.
+В данном примере были использованы рассмотренные ранее lifecycle-методы, методы render и constructor. Как вы могли заметить, в качестве props'ов мы можем передавать и функции, вызвая их `this.props.addText('!');`.
 
 ## Ссылки на инструменты и документацию
+* NodeJS - https://nodejs.org/en/
 * React - https://reactjs.org/
 * React DOM - https://reactjs.org/docs/react-dom.html
 * React Native - https://facebook.github.io/react-native/
